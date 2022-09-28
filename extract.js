@@ -7,7 +7,6 @@ console.log("read", text.length, "characters.");
 let lineCount = 0;
 let emailCount = 0;
 const regex = /@\w*\.com/gm;
-let emailTypes = 0;
 let emailDomains = [];
 
 text.split("\n").forEach(
@@ -16,21 +15,22 @@ text.split("\n").forEach(
 
 console.log(`Processed ${lineCount} lines.`);
 console.log(`Found ${emailCount} emails.`);
-console.log(`Found ${emailTypes} different email domains.`);
+console.log(`Found ${emailDomains.length} different email domains.`);
 
 // extract information from one line
 // and update global variables
 function processOneLine(line) {
     // example of gathering information
     lineCount++;
-    if (line.match(regex) !== null){
+    let matches = line.match(regex);
+    if (matches !== null){
         emailCount++;
-        let text = (line.match(regex)).toString();
-        console.log(text);
         //check to see if email domain is already been recorded
-        if (emailDomains.includes(text) !== true ){
-            emailDomains.push(text);
-            emailTypes++;
+        for (let i = 0; i < matches.length; i++){
+            
+            if (emailDomains.includes(matches[i]) !== true ){
+                emailDomains.push(matches[i]);
+            }
         }
     }
     // add code here to find emails in the line
