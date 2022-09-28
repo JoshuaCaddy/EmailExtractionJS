@@ -6,7 +6,7 @@ console.log("read", text.length, "characters.");
 // example of information gathered
 let lineCount = 0;
 let emailCount = 0;
-const regex = /@\w*\.com/gm;
+const regex = /(\S*)@(\w*\.\S*)/gm;
 let emailDomains = [];
 
 text.split("\n").forEach(
@@ -24,15 +24,13 @@ function processOneLine(line) {
     lineCount++;
     let matches = line.match(regex);
     if (matches !== null){
-        emailCount++;
         //check to see if email domain is already been recorded
         for (let i = 0; i < matches.length; i++){
-            
+            emailCount++;
             if (emailDomains.includes(matches[i]) !== true ){
                 emailDomains.push(matches[i]);
             }
         }
     }
-    // add code here to find emails in the line
 }
 console.log(emailDomains);
